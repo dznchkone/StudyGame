@@ -5,6 +5,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.vavilinigor.studygame.box2d.GroundUserData;
+import com.vavilinigor.studygame.box2d.RunnerUserData;
 
 /**
  * Created by ODSnew on 10.10.2017.
@@ -22,6 +24,7 @@ public class WorldUtils {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(Constants.GROUND_WIDTH, Constants.GROUND_HEIGHT);
         body.createFixture(shape, Constants.GROUND_DENSITY);
+        body.setUserData(new GroundUserData());
         shape.dispose();
         return body;
     }
@@ -33,7 +36,10 @@ public class WorldUtils {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(Constants.RUNNER_WIDTH /2, Constants.RUNNER_HEIGHT /2);
         Body body = world.createBody(bodyDef);
+        body.setGravityScale(Constants.RUNNER_GRAVITY_SCALE);
         body.createFixture(shape,Constants.RUNNER_DENSITY);
+        body.resetMassData();
+        body.setUserData(new RunnerUserData());
         shape.dispose();
         return body;
     }
