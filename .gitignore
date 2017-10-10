@@ -31,6 +31,9 @@ www-test/
 /android/out/
 com_crashlytics_export_strings.xml
 
+/.idea/workspace.xml
+/.idea/libraries
+
 ## Eclipse
 
 .classpath
