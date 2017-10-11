@@ -11,6 +11,7 @@ import com.vavilinigor.studygame.box2d.UserData;
 public class Runner extends GameActor {
 
     private boolean jumping;
+    private boolean dodging;
 
     public Runner(Body body) {
         super(body);
@@ -30,5 +31,21 @@ public class Runner extends GameActor {
 
     public void landed(){
         jumping = false;
+    }
+
+    public void dodge(){
+        if (!jumping){
+            body.setTransform(getUserData().getDodgePosition(),getUserData().getDodgeAngle());
+            dodging = true;
+        }
+    }
+
+    public void stopDodge(){
+        dodging = false;
+        body.setTransform(getUserData().getRunningPosition(), 0f);
+    }
+
+    public boolean isDodging(){
+        return dodging;
     }
 }
