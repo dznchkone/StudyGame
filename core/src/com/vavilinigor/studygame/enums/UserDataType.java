@@ -6,5 +6,6 @@ package com.vavilinigor.studygame.enums;
 
 public enum UserDataType {
     GROUND,
-    RUNNER
+    RUNNER,
+    ENEMY
 }
