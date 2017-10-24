@@ -13,10 +13,14 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.vavilinigor.studygame.actors.Background;
 import com.vavilinigor.studygame.actors.Enemy;
 import com.vavilinigor.studygame.actors.Ground;
 import com.vavilinigor.studygame.actors.Runner;
 import com.vavilinigor.studygame.utils.BodyUtils;
+import com.vavilinigor.studygame.utils.Constants;
 import com.vavilinigor.studygame.utils.WorldUtils;
 
 /**
@@ -24,8 +28,8 @@ import com.vavilinigor.studygame.utils.WorldUtils;
  */
 
 public class GameStage extends Stage implements ContactListener {
-    private static final int VIEWPORT_WIDTH = 20;
-    private static final int VIEWPORT_HEIGHT = 13;
+    private static final int VIEWPORT_WIDTH = Constants.APP_WIDTH;
+    private static final int VIEWPORT_HEIGHT = Constants.APP_HEIGHT;
 
     private World world;
     private Ground ground;
@@ -46,18 +50,25 @@ public class GameStage extends Stage implements ContactListener {
         ground = WorldUtils.createGround(world);
         runner = WorldUtils.createRunner(world);
         renderer = new Box2DDebugRenderer();*/
+       super(new ScalingViewport(Scaling.stretch,VIEWPORT_WIDTH,VIEWPORT_HEIGHT,
+               new OrthographicCamera(VIEWPORT_WIDTH,VIEWPORT_HEIGHT)));
         setUpWorld();
         setupCamera();
         setUpTouchControlAreas();
-        renderer = new Box2DDebugRenderer();
+        //renderer = new Box2DDebugRenderer();
     }
 
     private void setUpWorld() {
         world = WorldUtils.createWorld();
         world.setContactListener(this);
+        setupBackground();
         setUpGround();
         setUpRunner();
         createEnemy();
+    }
+
+    private void setupBackground() {
+        addActor(new Background());
     }
 
     private void setUpRunner() {
@@ -116,11 +127,11 @@ public class GameStage extends Stage implements ContactListener {
         addActor(enemy);
     }
 
-    @Override
+   /* @Override
     public void draw(){
         super.draw();
         renderer.render(world, camera.combined);
-    }
+    }*/
 
     @Override
     public boolean touchDown (int x, int y, int pointer, int button){
